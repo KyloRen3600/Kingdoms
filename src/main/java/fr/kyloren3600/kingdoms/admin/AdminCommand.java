@@ -1,9 +1,5 @@
 package fr.kyloren3600.kingdoms.admin;
 
-import com.sainttx.holograms.api.Hologram;
-import com.sainttx.holograms.api.HologramManager;
-import com.sainttx.holograms.api.HologramPlugin;
-import com.sainttx.holograms.api.line.TextLine;
 import fr.kyloren3600.kingdoms.Kingdoms;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,11 +38,6 @@ public class AdminCommand {
 					sender.sendMessage("guerre quittée");
 				}
 				if(args[0].equals("holo")) {
-					HologramManager hologramManager = JavaPlugin.getPlugin(HologramPlugin.class).getHologramManager();
-					Hologram hologram = new Hologram("test", player.getLocation());
-					hologram.addLine(new TextLine(hologram, "hey !"));
-					hologramManager.addActiveHologram(hologram);
-					hologram.spawn();
 
 				}
 			}

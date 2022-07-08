@@ -196,6 +196,42 @@ public final class Kingdoms extends JavaPlugin {
 		zoneManager = new ZoneManager(zones);
 		warManager = new WarManager(warTimes);
 
+		String lang = "EN";
+		Map<Kingdom, List<String>> kingdomHolograms = new HashMap<>();
+		Map<Zone, List<String>> zoneHolograms = new HashMap<>();
+		ConfigurationSection displayConfiguration = fileConfiguration.getConfigurationSection("display");
+		if (displayConfiguration != null) {
+			lang = displayConfiguration.getString("lang", "EN");
+			ConfigurationSection kingdomsDisplayConfiguration = displayConfiguration.getConfigurationSection("kingdoms");
+			if (kingdomsDisplayConfiguration != null) {
+				kingdomsDisplayConfiguration.getKeys(false).forEach(kingdomId -> {
+					Kingdom kingdom = kingdomManager.getKingdom(kingdomId);
+					if (kingdom != null) {
+						List<String> holograms = kingdomsDisplayConfiguration.getStringList(kingdomId);
+						kingdomHolograms.put(kingdom, holograms);
+					}
+				});
+			}
+			ConfigurationSection zonesDisplayConfiguration = displayConfiguration.getConfigurationSection("zones");
+			if (zonesDisplayConfiguration != null) {
+				zonesDisplayConfiguration.getKeys(false).forEach(zoneId -> {
+					Zone zone = zoneManager.getZone(zoneId);
+					if (zone != null) {
+						List<String> holograms = zonesDisplayConfiguration.getStringList(zoneId);
+						zoneHolograms.put(zone, holograms);
+					}
+				});
+			}
+		} else  {
+			displayManager.configNoDisplaySpecified();
+		}
+
+		displayManager = new DisplayManager(lang, kingdomHolograms, zoneHolograms);
+
+		Bukkit.getServer().getOnlinePlayers().forEach(player -> {
+			Kingdoms.getKingdomManager().registerPlayer(player);
+		});
+
 		getServer().getPluginManager().registerEvents(kingdomManager, this);
 		getServer().getPluginManager().registerEvents(warManager, this);
 		getServer().getPluginManager().registerEvents(zoneManager, this);

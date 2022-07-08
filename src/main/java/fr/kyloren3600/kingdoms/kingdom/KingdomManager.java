@@ -21,6 +21,10 @@ public final class KingdomManager implements Listener {
 		this.players = new HashMap<>();
 	}
 
+	public Kingdom getKingdom(String id) {
+		return kingdoms.get(id);
+	}
+
 	public Collection<Kingdom> getKingdoms() {
 		return kingdoms.values();
 	}

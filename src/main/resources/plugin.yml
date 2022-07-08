@@ -2,7 +2,7 @@ name: Kingdoms
 version: '${version}'
 main: fr.kyloren3600.kingdoms.Kingdoms
 prefix: Kingdoms
-depend: [WorldGuard, WorldGuardEvents, Holograms]
+depend: [WorldGuard, WorldGuardEvents, DecentHolograms]
 commands:
   kadmin:
     description: Your description

@@ -10,6 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,11 +20,17 @@ public class DisplayManager {
 
 	private final String prefix;
 	private final Logger logger;
+	private final HologramsManager hologramsManager;
 
-
-	public DisplayManager(String lang) {
+	public DisplayManager(String lang, Map<Kingdom, List<String>> kingdomHolograms, Map<Zone, List<String>> zoneHolograms) {
 		prefix = "[" + Kingdoms.getInstance().getName() + "] ";
 		logger = Bukkit.getServer().getLogger();
+
+		hologramsManager = new HologramsManager(lang, kingdomHolograms, zoneHolograms);
+	}
+
+	public DisplayManager(String lang) {
+		this(lang, new HashMap<Kingdom, List<String>>(), new HashMap<Zone, List<String>>());
 	}
 
 	//Config
@@ -31,6 +40,7 @@ public class DisplayManager {
 
 	public void configLoaded() {
 		sendConfigLog("Config loaded !");
+		hologramsManager.hideAllHolograms();
 	}
 
 	//War config
@@ -72,13 +82,18 @@ public class DisplayManager {
 		sendConfigLog("No WorldGuard region with id " + regionId + " for zone " + zoneName);
 	}
 
+	public void configNoDisplaySpecified() {
+	}
+
 	//Wars
 	public void warStarted() {
 		Bukkit.getServer().broadcastMessage("DEBUT DE LA GUERRE");
+		hologramsManager.warStarted();
 	}
 
 	public void warEnded() {
 		Bukkit.getServer().broadcastMessage("FIN DE LA GUERRE");
+		hologramsManager.warEnded();
 	}
 
 	//Zones
@@ -92,18 +107,24 @@ public class DisplayManager {
 
 	public void zoneCaptureStarted(Zone zone, Team team) {
 		Bukkit.getServer().broadcastMessage("Début de la capture de " + zone.getName() + " par " + team.getName());
+		hologramsManager.zoneCaptureStarted(zone, team);
 	}
 
 	public void zoneCaptureCanceled(Zone zone) {
 		Bukkit.getServer().broadcastMessage("Capture de la zone " + zone.getName() + " annulée !");
+		hologramsManager.zoneCaptureCanceled(zone);
 	}
 
 	public void zoneCaptured(Zone zone, Team team) {
 		Bukkit.getServer().broadcastMessage("Zone " + zone.getName() + " capturée par " + team.getName());
+		hologramsManager.zoneCaptured(zone, team);
 	}
 
 	public void zoneCapturePercentChanged(Zone zone, int newValue) {
-		Bukkit.getServer().broadcastMessage("Zone " + zone.getName() + " capturée à " + newValue + "%");
+		if (newValue == 25 || newValue == 50 || newValue == 75) {
+			Bukkit.getServer().broadcastMessage("Zone " + zone.getName() + " capturée à " + newValue + "%");
+		}
+		hologramsManager.zoneCapturePercentChanged(zone, newValue);
 	}
 
 	//Kingdoms

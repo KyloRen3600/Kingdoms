@@ -45,7 +45,7 @@ public class ZoneManager implements Listener {
 				if (warPlayer.getZone().equals(zone)) {
 					Team warPlayerTeam = warPlayer.getKingdomPlayer().getTeam();
 					if (warPlayerTeam.equals(zone.getCapturingTeam())) {
-						if (zone.addToCapturePercent(100)) {
+						if (zone.addToCapturePercent(1)) {
 							zone.capture(warPlayer.getKingdomPlayer().getTeam());
 							return;
 						}
@@ -72,6 +72,12 @@ public class ZoneManager implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onZoneEntered(ZoneEnteredEvent event) {
 		event.getZone().registerPlayer(event.getWarPlayer());
+
+		Team warPlayerTeam = event.getWarPlayer().getKingdomPlayer().getTeam();
+		if (!warPlayerTeam.equals(event.getZone().getCapturingTeam()) && canZoneBeCapturedByTeam(event.getZone(), warPlayerTeam)) {
+			event.getZone().startCapture(warPlayerTeam);
+		}
+
 		registerZoneChecker(event.getZone(), event.getWarPlayer());
 		Kingdoms.getDisplayManager().zoneEntered(event.getZone(), event.getWarPlayer());
 	}
