@@ -1,0 +1,9 @@
+name: Kingdoms
+version: '${version}'
+main: fr.kyloren3600.kingdoms.Kingdoms
+prefix: Kingdoms
+depend: [WorldGuard, WorldGuardEvents, Holograms]
+commands:
+  kadmin:
+    description: Your description
+    usage: /kadmin zones create nom royaume region
