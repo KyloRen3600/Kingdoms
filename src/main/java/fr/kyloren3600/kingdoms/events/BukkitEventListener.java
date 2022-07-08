@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class BukkitEventListener implements Listener {
+public final class BukkitEventListener implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Kingdoms.getKingdomManager().registerPlayer(event.getPlayer());

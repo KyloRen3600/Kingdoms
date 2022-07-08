@@ -4,7 +4,7 @@ import fr.kyloren3600.kingdoms.events.BaseEvent;
 import fr.kyloren3600.kingdoms.teams.Team;
 import fr.kyloren3600.kingdoms.war.zone.Zone;
 
-public class ZoneCaptureStartedEvent extends BaseEvent implements ZoneEvent {
+public final class ZoneCaptureStartedEvent extends BaseEvent implements ZoneEvent {
 
 	private final Zone zone;
 	private final Team team;

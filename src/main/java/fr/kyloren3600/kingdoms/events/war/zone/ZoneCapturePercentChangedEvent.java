@@ -3,7 +3,7 @@ package fr.kyloren3600.kingdoms.events.war.zone;
 import fr.kyloren3600.kingdoms.events.BaseEvent;
 import fr.kyloren3600.kingdoms.war.zone.Zone;
 
-public class ZoneCapturePercentChangedEvent extends BaseEvent implements ZoneEvent {
+public final class ZoneCapturePercentChangedEvent extends BaseEvent implements ZoneEvent {
 
 	private final Zone zone;
 	private final int oldValue;
