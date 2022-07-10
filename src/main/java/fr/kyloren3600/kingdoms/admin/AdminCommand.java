@@ -1,6 +1,8 @@
 package fr.kyloren3600.kingdoms.admin;
 
 import fr.kyloren3600.kingdoms.Kingdoms;
+import fr.kyloren3600.kingdoms.war.kits.Assassin;
+import fr.kyloren3600.kingdoms.war.kits.Kit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,8 +39,9 @@ public class AdminCommand {
 					Kingdoms.getWarManager().leaveWar(player);
 					sender.sendMessage("guerre quittée");
 				}
-				if(args[0].equals("holo")) {
-
+				if(args[0].equals("kit")) {
+					Kit kit = new Assassin(player);
+					kit.load();
 				}
 			}
 			return true;
